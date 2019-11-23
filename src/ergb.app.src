@@ -1,0 +1,15 @@
+{application, ergb,
+ [{description, "A simple Ruby library built to handle easy conversion and manipulation of colors."},
+  {vsn, "0.1.0"},
+  {registered, []},
+  {applications,
+   [kernel,
+    stdlib
+   ]},
+  {env,[]},
+  {modules, []},
+
+  {maintainers, []},
+  {licenses, ["Apache 2.0"]},
+  {links, []}
+ ]}.

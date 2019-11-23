@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Module color</title>
+<link rel="stylesheet" type="text/css" href="stylesheet.css" title="EDoc">
+</head>
+<body bgcolor="white">
+<div class="navbar"><a name="#navbar_top"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<hr>
+
+<h1>Module color</h1>
+<ul class="index"><li><a href="#types">Data Types</a></li><li><a href="#index">Function Index</a></li><li><a href="#functions">Function Details</a></li></ul>
+
+
+<h2><a name="types">Data Types</a></h2>
+
+<h3 class="typedecl"><a name="type-color">color()</a></h3>
+<p><b>abstract datatype</b>: <tt>color()</tt></p>
+<p> ------------------------------------------------------------------------------</p>
+
+<h3 class="typedecl"><a name="type-rgb">rgb()</a></h3>
+<p><tt>rgb() = {byte(), byte(), byte()}</tt></p>
+
+
+<h2><a name="index">Function Index</a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#darken-2">darken/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#darken_in_percent-2">darken_in_percent/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#desaturate-2">desaturate/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#desaturate_in_percent-2">desaturate_in_percent/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#from_fractions-3">from_fractions/3</a></td><td></td></tr>
+<tr><td valign="top"><a href="#from_rgb-1">from_rgb/1</a></td><td></td></tr>
+<tr><td valign="top"><a href="#from_rgb_hex-1">from_rgb_hex/1</a></td><td></td></tr>
+<tr><td valign="top"><a href="#invert-1">invert/1</a></td><td></td></tr>
+<tr><td valign="top"><a href="#lighten-2">lighten/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#lighten_in_percent-2">lighten_in_percent/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#mix-3">mix/3</a></td><td></td></tr>
+<tr><td valign="top"><a href="#new-3">new/3</a></td><td></td></tr>
+<tr><td valign="top"><a href="#rgb_to_hsl-1">rgb_to_hsl/1</a></td><td></td></tr>
+<tr><td valign="top"><a href="#saturate-2">saturate/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#saturate_in_percent-2">saturate_in_percent/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#to_hsl-1">to_hsl/1</a></td><td></td></tr>
+<tr><td valign="top"><a href="#to_rgb-1">to_rgb/1</a></td><td></td></tr>
+<tr><td valign="top"><a href="#to_rgb_hex-1">to_rgb_hex/1</a></td><td></td></tr>
+</table>
+
+<h2><a name="functions">Function Details</a></h2>
+
+<h3 class="function"><a name="darken-2">darken/2</a></h3>
+<div class="spec">
+<p><tt>darken(Amount, Color) -&gt; Color2</tt>
+<ul class="definitions"><li><tt>Amount = number()</tt></li><li><tt>Color = <a href="#type-color">color()</a></tt></li><li><tt>Color2 = <a href="#type-color">color()</a></tt></li></ul></p>
+</div>
+
+<h3 class="function"><a name="darken_in_percent-2">darken_in_percent/2</a></h3>
+<div class="spec">
+<p><tt>darken_in_percent(Amount, Color) -&gt; Color2</tt>
+<ul class="definitions"><li><tt>Amount = number()</tt></li><li><tt>Color = <a href="#type-color">color()</a></tt></li><li><tt>Color2 = <a href="#type-color">color()</a></tt></li></ul></p>
+</div>
+
+<h3 class="function"><a name="desaturate-2">desaturate/2</a></h3>
+<div class="spec">
+<p><tt>desaturate(Amount, Color) -&gt; Color2</tt>
+<ul class="definitions"><li><tt>Amount = number()</tt></li><li><tt>Color = <a href="#type-color">color()</a></tt></li><li><tt>Color2 = <a href="#type-color">color()</a></tt></li></ul></p>
+</div>
+
+<h3 class="function"><a name="desaturate_in_percent-2">desaturate_in_percent/2</a></h3>
+<div class="spec">
+<p><tt>desaturate_in_percent(Amount, Color) -&gt; Color2</tt>
+<ul class="definitions"><li><tt>Amount = number()</tt></li><li><tt>Color = <a href="#type-color">color()</a></tt></li><li><tt>Color2 = <a href="#type-color">color()</a></tt></li></ul></p>
+</div>
+
+<h3 class="function"><a name="from_fractions-3">from_fractions/3</a></h3>
+<div class="spec">
+<p><tt>from_fractions(H, S, L) -&gt; <a href="#type-color">color()</a></tt>
+<ul class="definitions"><li><tt>H = float()</tt></li><li><tt>S = float()</tt></li><li><tt>L = float()</tt></li></ul></p>
+</div>
+
+<h3 class="function"><a name="from_rgb-1">from_rgb/1</a></h3>
+<div class="spec">
+<p><tt>from_rgb(RGB) -&gt; <a href="#type-color">color()</a></tt>
+<ul class="definitions"><li><tt>RGB = <a href="#type-rgb">rgb()</a></tt></li></ul></p>
+</div>
+
+<h3 class="function"><a name="from_rgb_hex-1">from_rgb_hex/1</a></h3>
+<div class="spec">
+<p><tt>from_rgb_hex(StrOrInteger) -&gt; <a href="#type-color">color()</a></tt>
+<ul class="definitions"><li><tt>StrOrInteger = string() | integer()</tt></li></ul></p>
+</div>
+
+<h3 class="function"><a name="invert-1">invert/1</a></h3>
+<div class="spec">
+<p><tt>invert(Color) -&gt; Color2</tt>
+<ul class="definitions"><li><tt>Color = <a href="#type-color">color()</a></tt></li><li><tt>Color2 = <a href="#type-color">color()</a></tt></li></ul></p>
+</div>
+
+<h3 class="function"><a name="lighten-2">lighten/2</a></h3>
+<div class="spec">
+<p><tt>lighten(Amount, Color) -&gt; Color2</tt>
+<ul class="definitions"><li><tt>Amount = number()</tt></li><li><tt>Color = <a href="#type-color">color()</a></tt></li><li><tt>Color2 = <a href="#type-color">color()</a></tt></li></ul></p>
+</div>
+
+<h3 class="function"><a name="lighten_in_percent-2">lighten_in_percent/2</a></h3>
+<div class="spec">
+<p><tt>lighten_in_percent(Amount, Color) -&gt; Color2</tt>
+<ul class="definitions"><li><tt>Amount = number()</tt></li><li><tt>Color = <a href="#type-color">color()</a></tt></li><li><tt>Color2 = <a href="#type-color">color()</a></tt></li></ul></p>
+</div>
+
+<h3 class="function"><a name="mix-3">mix/3</a></h3>
+<div class="spec">
+<p><tt>mix(Other, Percentage, Color) -&gt; MixedColor</tt>
+<ul class="definitions"><li><tt>Percentage = float()</tt></li><li><tt>Other = <a href="#type-color">color()</a></tt></li><li><tt>Color = <a href="#type-color">color()</a></tt></li><li><tt>MixedColor = <a href="#type-color">color()</a></tt></li></ul></p>
+</div>
+
+<h3 class="function"><a name="new-3">new/3</a></h3>
+<div class="spec">
+<p><tt>new(H, S, L) -&gt; <a href="#type-color">color()</a></tt>
+<ul class="definitions"><li><tt>H = float()</tt></li><li><tt>S = float()</tt></li><li><tt>L = float()</tt></li></ul></p>
+</div>
+
+<h3 class="function"><a name="rgb_to_hsl-1">rgb_to_hsl/1</a></h3>
+<div class="spec">
+<p><tt>rgb_to_hsl(RGB) -&gt; {H, S, L}</tt>
+<ul class="definitions"><li><tt>RGB = <a href="#type-rgb">rgb()</a></tt></li><li><tt>H = float()</tt></li><li><tt>S = float()</tt></li><li><tt>L = float()</tt></li></ul></p>
+</div>
+
+<h3 class="function"><a name="saturate-2">saturate/2</a></h3>
+<div class="spec">
+<p><tt>saturate(Amount, Color) -&gt; Color2</tt>
+<ul class="definitions"><li><tt>Amount = number()</tt></li><li><tt>Color = <a href="#type-color">color()</a></tt></li><li><tt>Color2 = <a href="#type-color">color()</a></tt></li></ul></p>
+</div>
+
+<h3 class="function"><a name="saturate_in_percent-2">saturate_in_percent/2</a></h3>
+<div class="spec">
+<p><tt>saturate_in_percent(Amount, Color) -&gt; Color2</tt>
+<ul class="definitions"><li><tt>Amount = number()</tt></li><li><tt>Color = <a href="#type-color">color()</a></tt></li><li><tt>Color2 = <a href="#type-color">color()</a></tt></li></ul></p>
+</div>
+
+<h3 class="function"><a name="to_hsl-1">to_hsl/1</a></h3>
+<div class="spec">
+<p><tt>to_hsl(Color) -&gt; {H, S, L}</tt>
+<ul class="definitions"><li><tt>Color = <a href="#type-color">color()</a></tt></li><li><tt>H = float()</tt></li><li><tt>S = float()</tt></li><li><tt>L = float()</tt></li></ul></p>
+</div>
+
+<h3 class="function"><a name="to_rgb-1">to_rgb/1</a></h3>
+<div class="spec">
+<p><tt>to_rgb(Color) -&gt; {R, G, B}</tt>
+<ul class="definitions"><li><tt>Color = <a href="#type-color">color()</a></tt></li><li><tt>R = 0..255</tt></li><li><tt>G = 0..255</tt></li><li><tt>B = 0..255</tt></li></ul></p>
+</div>
+
+<h3 class="function"><a name="to_rgb_hex-1">to_rgb_hex/1</a></h3>
+<div class="spec">
+<p><tt>to_rgb_hex(Color) -&gt; HexString</tt>
+<ul class="definitions"><li><tt>Color = <a href="#type-color">color()</a></tt></li><li><tt>HexString = string()</tt></li></ul></p>
+</div>
+<hr>
+
+<div class="navbar"><a name="#navbar_bottom"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<p><i>Generated by EDoc, Nov 23 2019, 00:55:18.</i></p>
+</body>
+</html>
