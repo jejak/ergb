@@ -1,7 +1,7 @@
 ergb — Simple color manipulation erlang library
 ------------------------
 
-The erlang library is built to handle color conversion and manipulations.
+This erlang library is built to handle color conversion and manipulations.
 
 It is basically the erlang port of https://github.com/plashchynski/rgb rgb ruby gem.
 
