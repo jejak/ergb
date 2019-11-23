@@ -47,4 +47,4 @@ color:to_rgb(Color).
 Feel free to create [issues](https://github.com/jejak/ergb/issues).
 
 ## License
-Please see [LICENSE](xxx) for licensing details.
+Please see [LICENSE](https://github.com/jejak/ergb/blob/master/README.md) for licensing details.
