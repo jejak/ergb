@@ -65,7 +65,11 @@ should_invert_color_test() ->
 should_mix_color_with_other_color_test() ->
     Color1 = color:from_rgb_hex("#1F77B4"),
     Color2 = color:from_rgb_hex("#D62728"),
-
     Color3 = color:mix(Color2, 10, Color1),
-
     ?assertEqual("#316FA6", color:to_rgb_hex(Color3)).
+
+should_mix_colors_equally_test() ->
+    Color1 = color:from_rgb_hex("#1F77B4"),
+    Color2 = color:from_rgb_hex("#D62728"),
+    Color3 = color:mix(Color2, Color1),
+    ?assertEqual("#7B4F6E", color:to_rgb_hex(Color3)).

@@ -4,7 +4,7 @@
 -export([rgb_to_hsl/1, from_rgb/1, from_rgb_hex/1, new/3, from_fractions/3,
         to_rgb/1, to_hsl/1, to_rgb_hex/1, lighten/2, lighten_in_percent/2,
         darken/2, darken_in_percent/2, saturate/2, saturate_in_percent/2,
-        desaturate/2, desaturate_in_percent/2, invert/1, mix/3]).
+        desaturate/2, desaturate_in_percent/2, invert/1, mix/3, mix/2]).
 
 -export_type([color/0]).
 
@@ -364,9 +364,9 @@ invert(_) ->
 
 
 %% Mix colors
--spec mix(Other, Percentage, Color) -> MixedColor when
+-spec mix(OtherColor, Percentage, Color) -> MixedColor when
+    OtherColor :: color(),
     Percentage :: float(),
-    Other :: color(),
     Color :: color(),
     MixedColor :: color().
 
@@ -388,3 +388,12 @@ mix(#color{hue = H2, saturation = S2, lightness = L2} = Other,
     new(H, S, L);
 mix(_, _, _) ->
     erlang:error(badarg).
+
+%% Mix colors equally
+-spec mix(OtherColor, Color) -> MixedColor when
+    OtherColor :: color(),
+    Color :: color(),
+    MixedColor :: color().
+
+mix(OtherColor, Color) ->
+    mix(OtherColor, 50, Color).
