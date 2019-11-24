@@ -80,7 +80,7 @@ The test machine requirements:
 - rebar3
 
 ### Cloning the repo and run the tests
-Create an appropriate test folder on a developer machine having with it rebar3 installed and then run the following commands.
+Create an appropriate test folder on a developer machine and then run the following commands.
 ```sh
 > cd <test-folder>
 > git clone https://github.com/jejak/ergb.git
