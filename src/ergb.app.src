@@ -1,6 +1,6 @@
 {application, ergb,
  [{description, "A simple Ruby library built to handle easy conversion and manipulation of colors."},
-  {vsn, "0.2.0"},
+  {vsn, "0.2.1"},
   {registered, []},
   {applications,
    [kernel,
@@ -10,6 +10,6 @@
   {modules, []},
 
   {maintainers, []},
-  {licenses, ["Apache 2.0"]},
-  {links, []}
+  {licenses, ["MIT"]},
+  {links, [{"GitHub", "https://github.com/jejak/ergb.git"}]}
  ]}.
