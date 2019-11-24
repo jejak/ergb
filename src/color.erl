@@ -4,9 +4,19 @@
 -export([rgb_to_hsl/1, from_rgb/1, from_rgb_hex/1, new/3, from_fractions/3,
         to_rgb/1, to_hsl/1, to_rgb_hex/1, lighten/2, lighten_in_percent/2,
         darken/2, darken_in_percent/2, saturate/2, saturate_in_percent/2,
-        desaturate/2, desaturate_in_percent/2, invert/1, mix/3, mix/2]).
+        desaturate/2, desaturate_in_percent/2, invert/1, mix/3, mix/2,
+        set_hue/2, set_saturation/2, set_lightness/2]).
 
 -export_type([color/0]).
+
+-define(is_hue(V),
+            is_number(H) andalso (H >= 0) andalso (360 > H)).
+
+-define(is_saturation(V),
+            is_number(S) andalso (S >= 0.0) andalso (1.0 >= S)).
+
+-define(is_lightness(V),
+            is_number(L) andalso (L >= 0.0) andalso (1.0 >= L)).
 
 -define(is_color(H, S, L),
             is_number(H) andalso (H >= 0) andalso (360 > H) andalso
@@ -397,3 +407,39 @@ mix(_, _, _) ->
 
 mix(OtherColor, Color) ->
     mix(OtherColor, 50, Color).
+
+%% Set color hue
+-spec set_hue(Hue, Color) -> color() when
+    Hue :: float(),
+    Color :: color().
+
+set_hue(Hue, #color{hue = H, saturation = S, lightness = L})
+        when ?is_hue(Hue),
+             ?is_color(H,S,L) ->
+    new(Hue, S, L);
+set_hue(_, _) ->
+    erlang:error(badarg).
+
+%% Set color saturation
+-spec set_saturation(Saturation, Color) -> color() when
+    Saturation :: float(),
+    Color :: color().
+
+set_saturation(Saturation, #color{hue = H, saturation = S, lightness = L})
+        when ?is_saturation(Saturation),
+             ?is_color(H,S,L) ->
+    new(H, Saturation, L);
+set_saturation(_, _) ->
+    erlang:error(badarg).
+
+%% Set color lightness
+-spec set_lightness(Lightness, Color) -> color() when
+    Lightness :: float(),
+    Color :: color().
+
+set_lightness(Lightness, #color{hue = H, saturation = S, lightness = L})
+        when ?is_lightness(Lightness),
+             ?is_color(H,S,L) ->
+    new(H, S, Lightness);
+set_lightness(_, _) ->
+    erlang:error(badarg).

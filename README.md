@@ -5,7 +5,35 @@ This erlang library is built to handle color conversion and manipulations.
 
 It is basically the erlang port of https://github.com/plashchynski/rgb ruby gem.
 
-## Examples
+## The ergb lib
+This library was built with the rebar3 Erlang build tool and its code has been structured accordingly to this fact.   
+
+The color manipulation API resides in the library *color* module.
+
+### Usage
+The ergb library can be included in any Erlang app/lib project regardless of the build tool used.
+
+All is needed that the ergb git repo must be added to the target app/lib dependences.
+
+#### Adding to `rebar3` dependences
+rebar.conf:
+```erlang
+{deps, [
+    {ergb, {git, "https://github.com/jejak/ergb.git", {branch, "master"}}}
+]}.
+
+```
+#### Adding to `erlang.mk` dependences
+Makefile:
+```
+...
+DEPS=ergb
+dep_ergb = git https://github.com/jejak/ergb.git master
+
+include erlang.mk
+```
+
+#### Usage Examples
 ```erlang
 % Supported input data color forms:
 Color1 = color:from_rgb_hex("#333333").
@@ -43,6 +71,23 @@ color:to_rgb(Color).
 {115, 38, 38}
 ```
 
+## Run ergb Unit Tests
+In order to run the ergb unit tests, there is necessary to clone the ergb git repo and run the existing tests.
+
+The test machine requirements:
+- erlang otp: 19.0 +
+- git
+- rebar3
+
+### Cloning the repo and run the tests
+Create an appropriate test folder on a developer machine having with it rebar3 installed and then run the following commands.
+```sh
+> cd <test-folder>
+> git clone https://github.com/jejak/ergb.git
+> cd ergb
+> rebar3 eunit
+```
+ 
 ## Support
 Feel free to create [issues](https://github.com/jejak/ergb/issues).
 
