@@ -3,7 +3,11 @@ ergb — Simple color manipulation erlang library
 [![Build Status](https://api.travis-ci.org/jejak/ergb.svg?branch=master)](https://travis-ci.com/jejak/ergb)
 This erlang library is built to handle color conversion and manipulations.
 
-It is basically the erlang port of https://github.com/plashchynski/rgb ruby gem.
+It is started as an Erlang coding practicing project inspired by github/plashchynski/rgb ruby gem.
+
+During time, there has been a hex package developed and published to the hex.pm repository from this github repository (https://hex.pm/packages/ergb).  
+
+The library online documentation can found on: https://hexdocs.pm/ergb.
 
 ## The ergb lib
 This library was built with the rebar3 Erlang build tool and its code has been structured accordingly to this fact.   
