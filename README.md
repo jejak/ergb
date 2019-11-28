@@ -1,23 +1,23 @@
-ergb — Simple color manipulation erlang library
+eRGB — Simple Color Conversion and Manipulation Erlang Library
 ------------------------
 [![Build Status](https://api.travis-ci.org/jejak/ergb.svg?branch=master)](https://travis-ci.com/jejak/ergb)
-This erlang library is built to handle color conversion and manipulations.
+This Erlang library is built to handle color conversion and manipulations.
 
 It is started as an Erlang coding practicing project inspired by github/plashchynski/rgb ruby gem.
 
-During time, there has been a hex package developed and published to the hex.pm repository from this github repository (https://hex.pm/packages/ergb).  
+During time, there has been a hex package developed and published to the hex.pm repository from this Github project (https://hex.pm/packages/ergb).  
 
-The library online documentation can found on: https://hexdocs.pm/ergb.
+The library online documentation can found at: https://hexdocs.pm/ergb.
 
-## The ergb lib
+## The eRGB lib
 This library was built with the rebar3 Erlang build tool and its code has been structured accordingly to this fact.   
 
 The color manipulation API resides in the library *color* module.
 
 ### Usage
-The ergb library can be included in any Erlang app/lib project regardless of the build tool used.
+The eRGB library can be included in any Erlang app/lib project regardless of the build tool used.
 
-All is needed that the ergb git repo must be added to the target app/lib dependences.
+All is needed that this eRGB git repo must be added to the target app/lib dependences.
 
 #### Adding to `rebar3` dependences
 rebar.conf:
@@ -61,12 +61,7 @@ color:mix(OtherColor, 20, Color). % Mix 20% of other color into this one
 color:mix(OtherColor, Color). % 50% by default
 color:mix(OtherColor, 20, Color).
 
-% Adjust color HSL (hue, saturation, and lightness values) manually ...
-color:hue(0.1, Color).
-color:saturation(0.2, Color).
-color:lightness(0.3, Color).
-
-% Adjust color hue, saturation, lightness manually
+% Adjust color hue, saturation, lightness manually ...
 color:set_hue(145.2, Color).
 color:set_saturation(0.2, Color).
 color:set_lightness(0.3, Color).
@@ -80,8 +75,8 @@ color:to_rgb(Color).
 {115, 38, 38}
 ```
 
-## Run ergb Unit Tests
-In order to run the ergb unit tests, there is necessary to clone the ergb git repo and run the existing tests.
+## Run eRGB Unit Tests
+In order to run the eRGB unit tests, there is necessary to clone the eRGB git repo and run the existing tests.
 
 The test machine requirements:
 - erlang otp: 19.0 +

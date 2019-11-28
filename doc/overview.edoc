@@ -1,11 +1,11 @@
 @author Jeno Jakab
-@version 0.2.4
-@title ERGB Erlang Library API Specification
+@version 0.2.5
+@title eRGB Erlang Library API Specification
 @doc
 
 == Welcome! ==
 
-This documentation contains the ERGB library API specification. It is built
+This documentation contains the eRGB library API specification. It is built
 to provide easy to use color conversion and manipulations primitives
 for prospective Erlang projects.
 
@@ -13,10 +13,10 @@ for prospective Erlang projects.
 <ul>
 <li>{@section About ergb}</li>
 <li>{@section Usage}</li>
-<li>{@section Run ERGB   Unit Tests}</li>
+<li>{@section Run eRGB   Unit Tests}</li>
 </ul>
 
-== The ERGB lib ==
+== The eRGB lib ==
 This library was built with the rebar3 Erlang build tool and its code has been
 structured accordingly to this fact.
 
@@ -26,7 +26,7 @@ The color manipulation API resides in the library color module.
 The ergb library can be included in any Erlang app/lib project regardless
 of the build tool used.
 
-All is needed that the ERGB git repo must be added to the target
+All is needed that the eRGB git repo must be added to the target
 app/lib dependences.
 
 === Adding to rebar3 dependences ===
@@ -84,8 +84,8 @@ color:to_rgb(Color).
 {115, 38, 38}
 '''
 
-== Run ERGB Unit Tests ==
-In order to run the ERGB unit tests, there is necessary to clone the ERGB git
+== Run eRGB Unit Tests ==
+In order to run the eRGB unit tests, there is necessary to clone the eRGB git
 repo and run the existing tests.
 
 The test machine requirements:
