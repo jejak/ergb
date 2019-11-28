@@ -1,3 +1,35 @@
+%% -*- erlang-indent-level: 4;indent-tabs-mode: nil -*-
+%% ex: ts=4 sw=4 et
+%% -------------------------------------------------------------------
+%%
+%% ergb: Color Conversion and Manipulation Library
+%%
+%% Copyright (c) 2019 Jeno Jakab
+%%
+%% Permission is hereby granted, free of charge, to any person obtaining a copy
+%% of this software and associated documentation files (the "Software"), to deal
+%% in the Software without restriction, including without limitation the rights
+%% to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+%% copies of the Software, and to permit persons to whom the Software is
+%% furnished to do so, subject to the following conditions:
+%%
+%% The above copyright notice and this permission notice shall be included in all
+%% copies or substantial portions of the Software.
+%%
+%% THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+%% IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+%% FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+%% AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+%% LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+%% OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+%% SOFTWARE.
+%% @doc
+%% ERGB library main module
+%%
+%% It contains the entry points of the library color conversion and
+%% manipulation API.
+%%
+%% For general documentation, please, consult the overview page.
 -module(color).
 
 %% API
@@ -7,34 +39,30 @@
         desaturate/2, desaturate_in_percent/2, invert/1, mix/3, mix/2,
         set_hue/2, set_saturation/2, set_lightness/2]).
 
--export_type([color/0]).
+-export_type([color/0, rgb/0]).
 
--define(is_hue(V),
-            is_number(H) andalso (H >= 0) andalso (360 > H)).
+%%------------------------------------------------------------------------------
 
--define(is_saturation(V),
-            is_number(S) andalso (S >= 0.0) andalso (1.0 >= S)).
-
--define(is_lightness(V),
-            is_number(L) andalso (L >= 0.0) andalso (1.0 >= L)).
-
--define(is_color(H, S, L),
-            is_number(H) andalso (H >= 0) andalso (360 > H) andalso
-            is_number(S) andalso (S >= 0.0) andalso (1.0 >= S) andalso
-            is_number(L) andalso (L >= 0.0) andalso (1.0 >= L)).
-
--define(is_pct_amount(Amount),
-            is_number(Amount) andalso (Amount >= 0) andalso (100.0 >= Amount)).
--define(is_rgb(R, G, B),
-            is_number(R) andalso (R >= 0) andalso (255 >= R) andalso
-            is_number(G) andalso (G >= 0) andalso (255 >= G) andalso
-            is_number(B) andalso (B >= 0) andalso (255 >= B)).
-
--define(is_fraction(V),
-            is_number(V) andalso (V >= 0.0) andalso (1.0 >= V)).
+-include("color.hrl").
 
 %%------------------------------------------------------------------------------
 -type rgb() :: {byte(), byte(), byte()}.
+%% It represents a color in the rgb color scheme. It is essentially a tuple
+%% where:
+%% <dl>
+%%   <dt>first element of tuple</dt>
+%%     <dd>
+%%       Red component: 0..255
+%%     </dd>
+%%   <dt>second element of tuple</dt>
+%%     <dd>
+%%       Green component: 0..255
+%%     </dd>
+%%   <dt>third element of tuple</dt>
+%%     <dd>
+%%       Blue component: 0..255
+%%     </dd>
+%% </dl>
 
 %% Define a color
 -record(color,
@@ -44,9 +72,15 @@
     }).
 
 -opaque color() :: #color{}.
+%% It represents a color in the ERGB library. Its internal structure is private.
+
 %%------------------------------------------------------------------------------
 
-%% Convert color in {r,g,b} to {h,s,l) representation
+%% @doc
+%% Converts a color given in RGB representation to HSL representation
+%% @param RGB an {@link rgb()} representing the color to be converted to HSL
+%% @returns the resulted hue, saturation, lightness tuple
+%% @end
 -spec rgb_to_hsl(RGB) -> {H, S, L} when
     RGB :: rgb(),
     H :: float(),
@@ -59,7 +93,13 @@ rgb_to_hsl({R, G, B} = RGB)
 rgb_to_hsl(_) ->
     erlang:error(badarg).
 
-%% New color (h,s,l)
+%% @doc
+%% Constructs a color instance from hue, saturation, lightness.
+%% @param H the input hue: 0..360
+%% @param S the input saturation: 0..1.0
+%% @param L the input lightness: 0..1.0
+%% @returns the constucted color() type instance
+%% @end
 -spec new(H,S,L) -> color() when
     H :: float(),
     S :: float(),
@@ -73,7 +113,13 @@ new(H,S,L)
 new(_,_,_) ->
     erlang:error(badarg).
 
-%% New color from (h,s,l) fractions
+%% @doc
+%% Constructs a color instance from hue, saturation, lightness  fractions.
+%% @param H the input hue: 0..1.0
+%% @param S the input saturation: 0..1.0
+%% @param L the input lightness: 0..1.0
+%% @returns the color() type instance
+%% @end
 -spec from_fractions(H,S,L) -> color() when
     H :: float(),
     S :: float(),
@@ -85,8 +131,12 @@ from_fractions(H, S, L)
              ?is_fraction(L) ->
     new(360*H, S, L).
 
-%% Color from (r,g,b)
-%% Based on
+%% @doc
+%% Constructs a color instance from a red, green, blue tuple.
+%% @param RGB the {@link rgb()} input color
+%% @returns the constucted color() type instance
+%% @end
+%% The calculations are based on
 %% https://www.rapidtables.com/convert/color/rgb-to-hsl.html
 -spec from_rgb(RGB) -> color() when
     RGB :: rgb().
@@ -127,7 +177,57 @@ from_rgb_s(Delta, L)
 from_rgb_l(CMax, CMin) ->
     ((CMax + CMin)/2).
 
-%% Color from hex string rgb in #rrggbb format
+%% @doc
+%% Constructs a color instance from an integer or from a rrggbb
+%% formatted string.
+%%
+%% @param StrOrInteger
+%% <ul>
+%%   <li>
+%%     if StrOrInteger param is string:
+%%     <ul>
+%%       <li>
+%%         it must be in #rrggbb format, where the string represent a color
+%%         in rgb in hex format as here:
+%%         <ul>
+%%           <li>rr - hexa-decimal-string representing the red component of the
+%%                    color i.e. cc = decimal 204
+%%           </li>
+%%           <li>gg - same as rr but it represents the green component of the
+%%                    color
+%%           </li>
+%%           <li>bb - same as rr but it represents the blue component of the
+%%                    color
+%%           </li>
+%%         </ul>
+%%       </li>
+%%     </ul>
+%%   </li>
+%%   <li>
+%%     if StrOrInteger is Integer:
+%%     <ul>
+%%       <li>
+%%         It must be in range (0..16#ffffff) and
+%%       </li>
+%%       <li>
+%%         it represent an color as hex number as 16#rrggbb and as above:
+%%         <ul>
+%%           <li>
+%%             rr - is the red
+%%           </li>
+%%           <li>
+%%            gg - is the green, and
+%%           </li>
+%%           <li>
+%%             bb -is the blue color component as hex number
+%%           </li>
+%%         </ul>
+%%       </li>
+%%     </ul>
+%%   </li>
+%% </ul>
+%% @returns the constucted color() type instance
+%% @end
 -spec from_rgb_hex(StrOrInteger) -> color() when
     StrOrInteger :: string() | integer().
 
@@ -154,15 +254,17 @@ from_rgb_hex(Integer)
     Str = erlang:integer_to_list(Integer, 16),
     from_rgb_hex("#" ++ Str).
 
-%% Get (r,g,b) from color
-%% Based on
+%% @doc
+%% Converts a {@link color()} type instance to a red, green, blue tuple.
+%% @param Color the input color() type instance
+%% @returns the resulting {@link rgb()} type value
+%% @end
+%% The calculations are based on
 %% https://www.rapidtables.com/convert/color/hsl-to-rgb.html
 %% https://en.wikipedia.org/wiki/HSL_and_HSV
--spec to_rgb(Color) -> {R, G, B} when
+-spec to_rgb(Color) -> RGB when
     Color :: color(),
-    R :: 0..255,
-    G :: 0..255,
-    B :: 0..255 .
+    RGB :: rgb().
 
 to_rgb(#color{hue = H, saturation = S, lightness = L})
         when ?is_color(H,S,L) ->
@@ -186,7 +288,11 @@ to_rgb(#color{hue = H, saturation = S, lightness = L})
 to_rgb(_) ->
     erlang:error(badarg).
 
-%% Get (h, s, l) from color
+%% @doc
+%% Converts a {@link color()} type instance to a hue, saturation, lightness tuple.
+%% @param Color the input color() type instance
+%% @returns the resulting hue, saturation, lightness tuple
+%% @end
 -spec to_hsl(Color) -> {H, S, L} when
     Color :: color(),
     H :: float(),
@@ -199,7 +305,19 @@ to_hsl(#color{hue = H, saturation = S, lightness = L})
 to_hsl(_) ->
     erlang:error(badarg).
 
-%% Get hex string rgb in #rrggbb format from color
+%% @doc
+%% Converts a {@link color()} type instance to #rrggbb formatted string.
+%%
+%% In the formatted string:
+%% <ul>
+%%   <li>rr - hexa-decimal-string representing the red component of the color
+%%        i.e. cc = decimal 204</li>
+%%   <li>gg - same as rr but it represents the green component of the color</li>
+%%   <li>bb - same as rr but it represents the blue component of the color</li>
+%% </ul>
+%% @param Color the input color() type instance
+%% @returns the resulting string
+%% @end
 -spec to_rgb_hex(Color) -> HexString when
     Color :: color(),
     HexString :: string().
@@ -216,7 +334,13 @@ to_rgb_hex(#color{hue = H, saturation = S, lightness = L} = Color)
 to_rgb_hex(_) ->
     erlang:error(badarg).
 
-%% Lighten color
+%% @doc
+%% Lightens a {@link color()} type instance adding an amount of lightness more
+%% in the color.
+%% @param Amount a percentage amount between 0..100.0
+%% @param Color the input color() type instance
+%% @returns the resulting lightened {@link color()} type instance
+%% @end
 -spec lighten(Amount, Color) -> Color2 when
     Amount :: number(),
     Color :: color(),
@@ -235,7 +359,13 @@ lighten(Amount, #color{hue = H, saturation = S, lightness = L})
 lighten(_, _) ->
     erlang:error(badarg).
 
-%% Lighten color in percentage
+%% @doc
+%% Lightens a {@link color()} type instance increasing its lightness by taking
+%% away an amount of percentage darkness.
+%% @param Amount a percentage amount between 0..100.0
+%% @param Color the input color() type instance
+%% @returns the resulting lightened {@link color()} type instance
+%% @end
 -spec lighten_in_percent(Amount, Color) -> Color2 when
     Amount :: number(),
     Color :: color(),
@@ -251,7 +381,13 @@ lighten_in_percent(Amount, #color{hue = H, saturation = S, lightness = L})
 lighten_in_percent(_, _) ->
     erlang:error(badarg).
 
-%% Darken color
+%% @doc
+%% Darkens a {@link color()} type instance adding an amount of darkness more
+%% in the color.
+%% @param Amount a percentage amount between 0..100.0
+%% @param Color the input color() type instance
+%% @returns the resulting darkened {@link color()} type instance
+%% @end
 -spec darken(Amount, Color) -> Color2 when
     Amount :: number(),
     Color :: color(),
@@ -270,7 +406,13 @@ darken(Amount, #color{hue = H, saturation = S, lightness = L})
 darken(_, _) ->
     erlang:error(badarg).
 
-%% Darken color in percentage
+%% @doc
+%% Darkens a {@link color()} type instance increasing its darkness by taking
+%% away an amount of percentage lightness.
+%% @param Amount a percentage amount between 0..100.0
+%% @param Color the input color() type instance
+%% @returns the resulting darkened {@link color()} type instance
+%% @end
 -spec darken_in_percent(Amount, Color) -> Color2 when
     Amount :: number(),
     Color :: color(),
@@ -292,6 +434,13 @@ darken_in_percent(_, _) ->
     Color :: color(),
     Color2 :: color().
 
+%% @doc
+%% Saturates a {@link color()} type instance adding an amount of saturation more
+%% in the color.
+%% @param Amount a percentage amount between 0..100.0
+%% @param Color the input color() type instance
+%% @returns the resulting saturated {@link color()} type instance
+%% @end
 saturate(Amount, #color{hue = H, saturation = S, lightness = L})
         when ?is_pct_amount(Amount),
              ?is_color(H,S,L) ->
@@ -305,7 +454,13 @@ saturate(Amount, #color{hue = H, saturation = S, lightness = L})
 saturate(_, _) ->
     erlang:error(badarg).
 
-%% Saturate color in percentage
+%% @doc
+%% Saturates a {@link color()} type instance increasing its saturation  by
+%% taking away an amount of percentage unsaturation.
+%% @param Amount a percentage amount between 0..100.0
+%% @param Color the input color() type instance
+%% @returns the resulting saturated {@link color()} type instance
+%% @end
 -spec saturate_in_percent(Amount, Color) -> Color2 when
     Amount :: number(),
     Color :: color(),
@@ -321,7 +476,13 @@ saturate_in_percent(Amount, #color{hue = H, saturation = S, lightness = L})
 saturate_in_percent(_, _) ->
     erlang:error(badarg).
 
-%% Desaturate color
+%% @doc
+%% Desaturates a {@link color()} type instance adding an amount of unsaturation
+%% more in the color.
+%% @param Amount a percentage amount between 0..100.0
+%% @param Color the input color() type instance
+%% @returns the resulting desaturated {@link color()} type instance
+%% @end
 -spec desaturate(Amount, Color) -> Color2 when
     Amount :: number(),
     Color :: color(),
@@ -340,7 +501,13 @@ desaturate(Amount, #color{hue = H, saturation = S, lightness = L})
 desaturate(_, _) ->
     erlang:error(badarg).
 
-%% Desaturate color in percentage
+%% @doc
+%% Desaturates a {@link color()} type instance increasing its desaturation
+%% by taking away an amount of percentage saturation.
+%% @param Amount a percentage amount between 0..100.0
+%% @param Color the input color() type instance
+%% @returns the resulting desaturated {@link color()} type instance
+%% @end
 -spec desaturate_in_percent(Amount, Color) -> Color2 when
     Amount :: number(),
     Color :: color(),
@@ -356,7 +523,12 @@ desaturate_in_percent(Amount, #color{hue = H, saturation = S, lightness = L})
 desaturate_in_percent(_, _) ->
     erlang:error(badarg).
 
-%% Invert colors
+%% @doc
+%% Invertes a {@link color()} type instance in rgb
+%% @param Amount a percentage amount between 0..100.0
+%% @param Color the input color() type instance
+%% @returns the resulting inverted {@link color()} type instance
+%% @end
 -spec invert(Color) -> Color2 when
     Color :: color(),
     Color2 :: color().
@@ -373,7 +545,15 @@ invert(_) ->
     erlang:error(badarg).
 
 
-%% Mix colors
+%% @doc
+%% Mixes two {@link color()} type instances with a percentage mixing coefficient
+%% @param OtherColor the other input color() type instance to be mixed in
+%% @param Percentage a percentage amount between 0..100.0 defining the other color
+%% mixing-in coefficient
+%% @param Color the input color() type instance to which the other color be
+%% mixed
+%% @returns the resulting mixed {@link color()} type instance
+%% @end
 -spec mix(OtherColor, Percentage, Color) -> MixedColor when
     OtherColor :: color(),
     Percentage :: float(),
@@ -399,7 +579,13 @@ mix(#color{hue = H2, saturation = S2, lightness = L2} = Other,
 mix(_, _, _) ->
     erlang:error(badarg).
 
-%% Mix colors equally
+%% @doc
+%% Mixes two {@link color()} type instances equally (coefficient=0.5)
+%% @param OtherColor the other input color() type instance to be mixed in
+%% @param Color the input color() type instance to which the other color be
+%% mixed
+%% @returns the resulting mixed {@link color()} type instance
+%% @end
 -spec mix(OtherColor, Color) -> MixedColor when
     OtherColor :: color(),
     Color :: color(),
@@ -408,7 +594,12 @@ mix(_, _, _) ->
 mix(OtherColor, Color) ->
     mix(OtherColor, 50, Color).
 
-%% Set color hue
+%% @doc
+%% Sets hue for a {@link color()} type instance
+%% @param Hue the hue value between 0..360.0 to be set
+%% @param Color the input color() type instance
+%% @returns the resulting {@link color()} type instance
+%% @end
 -spec set_hue(Hue, Color) -> color() when
     Hue :: float(),
     Color :: color().
@@ -420,7 +611,12 @@ set_hue(Hue, #color{hue = H, saturation = S, lightness = L})
 set_hue(_, _) ->
     erlang:error(badarg).
 
-%% Set color saturation
+%% @doc
+%% Sets saturation for a {@link color()} type instance
+%% @param Saturation the saturation value between 0..1.0 to be set
+%% @param Color the input color() type instance
+%% @returns the resulting {@link color()} type instance
+%% @end
 -spec set_saturation(Saturation, Color) -> color() when
     Saturation :: float(),
     Color :: color().
@@ -432,7 +628,12 @@ set_saturation(Saturation, #color{hue = H, saturation = S, lightness = L})
 set_saturation(_, _) ->
     erlang:error(badarg).
 
-%% Set color lightness
+%% @doc
+%% Sets lightness for a {@link color()} type instance
+%% @param Lightness the lightness value between 0..1.0 to be set
+%% @param Color the input color() type instance
+%% @returns the resulting {@link color()} type instance
+%% @end
 -spec set_lightness(Lightness, Color) -> color() when
     Lightness :: float(),
     Color :: color().

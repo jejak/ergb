@@ -1,3 +1,5 @@
+%% @hidden
+
 -module(color_utils).
 
 %% API

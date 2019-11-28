@@ -62,6 +62,11 @@ color:hue(0.1, Color).
 color:saturation(0.2, Color).
 color:lightness(0.3, Color).
 
+% Adjust color hue, saturation, lightness manually
+color:set_hue(145.2, Color).
+color:set_saturation(0.2, Color).
+color:lightness(0.3, Color).
+
 % Supported output formats ...
 color:to_rgb_hex(Color).
 "#732626"
@@ -87,7 +92,7 @@ Create an appropriate test folder on a developer machine and then run the follow
 > cd ergb
 > rebar3 eunit
 ```
- 
+
 ## Support
 Feel free to create [issues](https://github.com/jejak/ergb/issues).
 

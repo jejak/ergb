@@ -1,0 +1,106 @@
+@author Jeno Jakab
+@version 0.2.3
+@title ERGB Erlang Library API Specification
+@doc
+
+== Welcome! ==
+
+This documentation contains the ERGB library API specification. It is built
+to provide easy to use color conversion and manipulations primitives
+for prospective Erlang projects.
+
+== Table of Contents ==
+<ul>
+<li>{@section About ergb}</li>
+<li>{@section Usage}</li>
+<li>{@section Run ERGB   Unit Tests}</li>
+</ul>
+
+== The ERGB lib ==
+This library was built with the rebar3 Erlang build tool and its code has been
+structured accordingly to this fact.
+
+The color manipulation API resides in the library color module.
+
+== Usage ==
+The ergb library can be included in any Erlang app/lib project regardless
+of the build tool used.
+
+All is needed that the ERGB git repo must be added to the target
+app/lib dependences.
+
+=== Adding to rebar3 dependences ===
+rebar.conf:
+```
+{deps, [
+    {ergb, {git, "https://github.com/jejak/ergb.git", {branch, "master"}}}
+]}.
+'''
+
+=== Adding to erlang.mk dependences ===
+Makefile:
+```
+DEPS=ergb
+dep_ergb = git https://github.com/jejak/ergb.git master
+
+include erlang.mk
+'''
+
+=== Usage Examples ===
+```
+% Supported input data color forms:
+Color1 = color:from_rgb_hex("#333333").
+Color2 = color:from_rgb_hex(0xFF0000).
+Color3 = color:from_rgb(115, 38, 38).
+Color = color:new(0, 1.0, 0.5). % HSL
+
+% Supported color manipulations ...
+color:darken(20, Color).
+color:darken_in_percent(10, Color).
+color:lighten(20, Color).
+color:lighten_in_percent(20, Color).
+color:saturate(20, Color).
+color:saturate_in_percent(20, Color).
+color:desaturate(20, Color).
+color:desaturate_in_percent(20, Color).
+color:invert(Color).
+
+% Mixing colors ...
+color:mix(OtherColor, 20, Color). % Mix 20% of other color into this one
+color:mix(OtherColor, Color). % 50% by default
+color:mix(OtherColor, 20, Color).
+
+% Adjust color hue, saturation, lightness manually
+color:set_hue(145.2, Color).
+color:set_saturation(0.2, Color).
+color:lightness(0.3, Color).
+
+% Supported output formats ...
+color:to_rgb_hex(Color).
+"#732626"
+color:to_hsl(Color).
+{0.0, 1.0, 0.5}
+color:to_rgb(Color).
+{115, 38, 38}
+'''
+
+== Run ERGB Unit Tests ==
+In order to run the ERGB unit tests, there is necessary to clone the ERGB git
+repo and run the existing tests.
+
+The test machine requirements:
+<ul>
+<li>Erlang OTP: 19.0+</li>
+<li>git</li>
+<li>rebar3</li>
+</ul>
+
+=== Cloning the repo and run the unit tests ===
+Create an appropriate test folder on a developer machine having with it rebar3
+installed and then run the following commands.
+```
+> cd <test-folder>
+> git clone https://github.com/jejak/ergb.git
+> cd ergb
+> rebar3 eunit
+'''
