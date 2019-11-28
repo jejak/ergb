@@ -43,7 +43,7 @@ include erlang.mk
 Color1 = color:from_rgb_hex("#333333").
 Color2 = color:from_rgb_hex(0xFF0000).
 Color3 = color:from_rgb(115, 38, 38).
-Color = color:new(0, 1.0, 0.5). % HSL
+Color = color:new(0, 1.0, 0.5).
 
 % Supported color manipulations ...
 color:darken(20, Color).
