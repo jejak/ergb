@@ -7,7 +7,7 @@ It is started as an Erlang coding practicing project inspired by github/plashchy
 
 During time, there has been a hex package developed and published to the hex.pm repository from this Github project (https://hex.pm/packages/ergb).  
 
-The library online documentation can found at: https://hexdocs.pm/ergb.
+The library online documentation can be found at: https://hexdocs.pm/ergb.
 
 ## The eRGB lib
 This library was built with the rebar3 Erlang build tool and its code has been structured accordingly to this fact.   
