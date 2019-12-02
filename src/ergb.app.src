@@ -1,6 +1,6 @@
 {application, ergb,
  [{description, "Simple color manipulation erlang library"},
-  {vsn, "0.2.6"},
+  {vsn, "0.2.8"},
   {registered, []},
   {applications,
    [kernel,

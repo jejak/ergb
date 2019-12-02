@@ -1,5 +1,5 @@
 @author Jeno Jakab
-@version 0.2.5
+@version 0.2.8
 @title eRGB Erlang Library API Specification
 @doc
 
@@ -95,8 +95,7 @@ The test machine requirements:
 </ul>
 
 === Cloning the repo and run the unit tests ===
-Create an appropriate test folder on a developer machine having with it rebar3
-installed and then run the following commands.
+Create an appropriate test folder on a developer machine and run the following commands.
 ```
 > cd <test-folder>
 > git clone https://github.com/jejak/ergb.git
