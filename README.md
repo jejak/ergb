@@ -17,22 +17,35 @@ The color manipulation API resides in the library *color* module.
 ### Usage
 The eRGB library can be included in any Erlang app/lib project regardless of the build tool used.
 
-All is needed that this eRGB git repo must be added to the target app/lib dependences.
+All is needed that this eRGB git repo or the hex.pm ergb package must be added to the target app/lib dependences.
 
 #### Adding to `rebar3` dependences
-rebar.conf:
+rebar.config (with ergb github repo dependency):
 ```erlang
 {deps, [
     {ergb, {git, "https://github.com/jejak/ergb.git", {branch, "master"}}}
 ]}.
 
 ```
-#### Adding to `erlang.mk` dependences
-Makefile:
+rebar.config (with ergb hex package dependency):
+```erlang
+{deps, [
+    ergb
+]}.
+
 ```
-...
+
+#### Adding to `erlang.mk` dependences
+Makefile (with ergb github repo dependency):
+```
 DEPS=ergb
 dep_ergb = git https://github.com/jejak/ergb.git master
+
+include erlang.mk
+```
+Makefile (with ergb hex package dependency):
+```
+DEPS=ergb
 
 include erlang.mk
 ```
